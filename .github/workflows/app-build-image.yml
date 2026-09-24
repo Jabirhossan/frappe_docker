@@ -170,10 +170,15 @@ jobs:
           APP_NAME: ${{ inputs.app_name }}
           TEST_IMAGE: ${{ env.TEST_IMAGE }}
         run: |
-          docker run --rm --entrypoint bash "$TEST_IMAGE" -lc \
-            "test -d /home/frappe/frappe-bench/apps/frappe && \
-             test -d /home/frappe/frappe-bench/apps/erpnext && \
-             test -d /home/frappe/frappe-bench/apps/${APP_NAME}"
+          docker run --rm --entrypoint bash "$TEST_IMAGE" -lc '
+            echo "===== Apps inside image ====="
+            ls -la /home/frappe/frappe-bench/apps
+            echo "============================"
+      
+            test -d /home/frappe/frappe-bench/apps/frappe
+            test -d /home/frappe/frappe-bench/apps/erpnext
+            test -d /home/frappe/frappe-bench/apps/hrms
+          '
 
       - name: Login to GHCR
         if: ${{ inputs.push && inputs.registry == 'ghcr.io' }}
