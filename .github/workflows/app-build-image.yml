@@ -102,6 +102,7 @@ jobs:
         uses: docker/setup-buildx-action@v4
 
       - name: Create apps.json
+      
         env:
           APP_REPO: ${{ inputs.app_repo }}
           APP_REF: ${{ inputs.app_ref }}
@@ -128,7 +129,13 @@ jobs:
               encoding="utf-8",
           )
           PY
-
+        
+      - name: Debug apps.json
+        run: |
+              echo "===== apps.json ====="
+              cat "${{ env.APPS_JSON_PATH }}"
+              echo "====================="
+              
       - name: Build smoke-test image
         uses: docker/build-push-action@v7
         with:
