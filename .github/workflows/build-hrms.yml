@@ -1,0 +1,19 @@
+name: Build Frappe HRMS Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/app-build-image.yml
+    with:
+      app_name: hrms
+      app_repo: frappe/hrms
+      app_ref: version-16
+      frappe_ref: version-16
+      frappe_image_prefix: frappe
+      image_name: ghcr.io/jabirhossan/hrms
+      image_tag: latest
+      push: true
+      registry: ghcr.io
+      platforms: linux/amd64
